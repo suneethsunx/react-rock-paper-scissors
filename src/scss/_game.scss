@@ -1,0 +1,49 @@
+@media (max-width:514px) {
+    img {
+        max-width: none;
+    }
+
+    .score-board-container {
+        .score-board {
+            width: 90%;
+        }
+    }
+
+    .game-container {
+        .game-area {
+            width: 80%;
+
+            img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .player-choice {
+                .text {
+                    h4 {
+                        font-size: 20px;
+                    }
+                }
+            }
+
+            .text-4xl {
+                font-size: 25px;
+            }
+
+            .ai-choice {
+                .rounded-full {
+                    width: 120px;
+                    height: 120px;
+                }
+            }
+        }
+
+    }
+
+    footer {
+        a {
+            font-size: 10px;
+            opacity: 80%;
+        }
+    }
+}
