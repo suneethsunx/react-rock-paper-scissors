@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import PapperImage from '../images/paper-image.png'
 import RockImage from '../images/rock-image.png'
 import ScissorImage from '../images/scissor-image.png'
@@ -6,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSound } from 'use-sound'
 import ClickEffect from '../audios/click.wav'
 
-const PlayGround = ({ choice, setChoice }) => {
+const PlayGround = ({ choice, setChoice, setScore, setAiScore }) => {
 
     const navigate = useNavigate()
     const handleChoice = (e) => {
@@ -17,9 +18,17 @@ const PlayGround = ({ choice, setChoice }) => {
 
     const [click] = useSound(ClickEffect)
 
+    const location = useLocation()
+    const { restart } = location.state || false
+    
+    if(restart === true){
+        setScore(0)
+        setAiScore(0)
+    }
+
     return (
         <div>
-           
+
             <div className="playground-container">
                 <div className="playground flex flex-col justify-center items-center ">
                     <div className="title">

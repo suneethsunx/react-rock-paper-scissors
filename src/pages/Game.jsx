@@ -15,7 +15,7 @@ import WinEffect from '../audios/win2.mp3'
 import DrawEffect from '../audios/draw.wav'
 
 
-const Game = ({ choice, score, setScore }) => {
+const Game = ({ choice, score, setScore, setAiScore, aiscore }) => {
 
     const [aichoice, setAiChoice] = useState('')
     const [playerStats, setPlayerStats] = useState('')
@@ -41,7 +41,7 @@ const Game = ({ choice, score, setScore }) => {
         if (choice === 'rock' && aichoice === 'paper') {
             setPlayerStats('lose')
             setStatus('YOU LOSE !')
-            setScore(score - 1)
+            setAiScore(aiscore + 1)
         } else if (choice === 'rock' && aichoice === 'scissor') {
             setPlayerStats('win')
             setStatus('YOU WIN !')
@@ -53,7 +53,7 @@ const Game = ({ choice, score, setScore }) => {
         } else if (choice === 'paper' && aichoice === 'scissor') {
             setPlayerStats('lose')
             setStatus('YOU LOSE !')
-            setScore(score - 1)
+            setAiScore(aiscore + 1)
         } else if (choice === 'scissor' && aichoice === 'paper') {
             setPlayerStats('win')
             setStatus('YOU WIN !')
@@ -61,7 +61,7 @@ const Game = ({ choice, score, setScore }) => {
         } else if (choice === 'scissor' && aichoice === 'rock') {
             setPlayerStats('lose')
             setStatus('YOU LOSE !')
-            setScore(score - 1)
+            setAiScore(aiscore + 1)
         } else {
             setStatus('DRAW !')
             setPlayerStats('draw')
@@ -92,9 +92,18 @@ const Game = ({ choice, score, setScore }) => {
         }
     }, [playerStats])
 
+    let navigateButton = <Link to='/' state={{ restart: false }} >
+        <div className='text-sm bg-slate-700 font-semibold p-2 rounded mt-3 hover:bg-slate-600 duration-100'>PLAY AGAIN</div>
+    </Link>
+    if (aiscore >= 10 || score >= 10) {
+        navigateButton = <Link to='/' state={{ restart: true }} >
+            <div className='text-sm bg-slate-700 font-semibold p-2 rounded mt-3 hover:bg-slate-600 duration-100'>RESTART</div>
+        </Link>
+    }
+
     return (
         <div>
-            { playerStats === 'win' && <Confetti numberOfPieces={500} recycle={false}  />}
+            {playerStats === 'win' && <Confetti numberOfPieces={500} recycle={false} />}
             <div className="game-container flex flex-col items-center">
                 <div>
                     <div className="game-status font-black text-4xl">
@@ -102,9 +111,8 @@ const Game = ({ choice, score, setScore }) => {
                     </div>
 
                     {
-                        counter === 0 ? <Link to='/'>
-                            <div className='text-sm bg-slate-700 font-semibold p-2 rounded mt-3 hover:bg-slate-600 duration-100'>PLAY AGAIN</div>
-                        </Link>
+                        counter === 0 ?
+                            navigateButton
                             :
                             ''
                     }
